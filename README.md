@@ -1,2 +1,2 @@
 # WeClaw
-A Chrome Web Agent that survives in modern frontend frameworks.
+A Chrome Browser Agent
