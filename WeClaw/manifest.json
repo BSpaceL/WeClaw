@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "WeClaw Agent ",
+  "version": "1.0",
+  "permissions": [
+    "sidePanel",
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "side_panel": { "default_path": "popup.html" },
+  "action": { "default_title": "点击打开 龙虾 控制台" },
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["*://filehelper.weixin.qq.com/*"],
+      "js": ["wechat_listener.js"]
+    }
+  ]
+}

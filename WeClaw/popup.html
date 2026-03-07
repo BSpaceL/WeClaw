@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { 
+      width: 100%; 
+      min-width: 240px; 
+      height: 100vh; 
+      margin: 0; 
+      padding: 15px; 
+      box-sizing: border-box; 
+      background: #1a1a1a; 
+      color: #4ade80; 
+      font-family: sans-serif; 
+      display: flex; 
+      flex-direction: column; 
+      overflow-x: hidden;
+    }
+    .header-area { flex-shrink: 0; }
+    h3 { margin-top: 0; color: #10b981; font-size: 16px; text-align: center; white-space: nowrap; }
+    .card { background: #2d2d2d; padding: 12px; border-radius: 8px; margin-bottom: 15px; }
+    label { font-size: 12px; color: #a3a3a3; display: block; margin-bottom: 8px; }
+    input { width: 100%; box-sizing: border-box; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #4ade80; background: #1a1a1a; color: #fff; }
+    button { width: 100%; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; border: none; font-size: 13px; transition: opacity 0.2s; }
+    button:hover { opacity: 0.8; }
+    .btn-save { background: #10b981; color: #000; margin-bottom: 5px; }
+    .btn-abort { background: #ef4444; color: #fff; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(239,68,68,0.3); }
+    #status { color: #10b981; font-size: 12px; text-align: center; display: none; margin-top: 5px; }
+    
+    /* 🚀 战报监控区 */
+    #terminal { 
+      flex-grow: 1; 
+      overflow-y: auto; 
+      overflow-x: hidden;
+      padding: 12px; 
+      background: #0a0a0a; 
+      border-radius: 6px;
+      border: 1px solid #333;
+      word-wrap: break-word; 
+      word-break: break-all;
+      font-size: 12px; 
+      line-height: 1.5;
+      font-family: monospace;
+    }
+    .log-item { margin-bottom: 6px; border-bottom: 1px dashed rgba(16, 185, 129, 0.2); padding-bottom: 4px;}
+  </style>
+</head>
+<body>
+  <div class="header-area">
+    <h3>🦞龙虾 控制枢纽</h3>
+    <div class="card">
+      <label>🔑 硅基流动 API Key</label>
+      <input type="password" id="apiKey" placeholder="sk-..." />
+      <button id="saveBtn" class="btn-save">💾 保存密钥</button>
+      <div id="status">✅ 已保存！</div>
+    </div>
+    <button id="abortBtn" class="btn-abort">🛑 物理切断 / 紧急中止</button>
+  </div>
+  
+  <div id="terminal">
+    <div style="color:#a3a3a3; margin-bottom: 10px;">🟢 系统已就绪，等待微信端触发指令...</div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
