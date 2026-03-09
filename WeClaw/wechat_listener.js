@@ -1,15 +1,13 @@
 
 
-(() => { // 🚀 作用域隔离防护服
+(() => { 
 
-    // 防止重复注入
+
     if (document.getElementById('agent-terminal')) return;
 
     console.log("🦞Agent 监控台 V6.5 已就绪...");
 
-    // ============================
-    // 1. 构建 UI
-    // ============================
+
     const terminal = document.createElement('div');
     terminal.id = 'agent-terminal';
     terminal.style.cssText = `
@@ -102,9 +100,7 @@
         content.scrollTop = content.scrollHeight;
     }
 
-    // ============================
-    // 2. 消息通信
-    // ============================
+
     chrome.runtime.onMessage.addListener((msg) => {
         if (msg.type === "AGENT_LOG") {
             console.log("[Agent Internal]:", msg.text);
@@ -126,11 +122,9 @@
         }
     });
 
-    // ============================
-    // 3. 指令捕捉 (防重影逻辑)
-    // ============================
+
     
-    // 🔥 全局锁：记录最后一次处理的指令和时间
+
     let lastProcessedText = "";
     let lastProcessedTime = 0;
 
@@ -142,10 +136,10 @@
 
                     const text = node.innerText || "";
                     
-                    // 🔥 防死循环：忽略自己发出的带有"🤖执行汇报"的消息
+                  
                     if (!text.trim() || text.includes("🤖执行汇报")) return;
 
-                    // 🔥 防抖：如果2秒内遇到完全一样的文本，说明是多层DOM重复触发，直接丢弃
+                   
                     if (text === lastProcessedText && (Date.now() - lastProcessedTime < 2000)) {
                         node.dataset.agentProcessed = "true";
                         return;
@@ -160,7 +154,7 @@
                         return;
                     }
 
-                    // 触发指令依然是你熟悉的“龙虾”
+                   
                     const match = text.match(/龙虾\s*(.+)/i);
                     if (match && match[1]) {
                         lastProcessedText = text; lastProcessedTime = Date.now();
@@ -179,15 +173,11 @@
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // ============================
-    // 4. 自动回复 (并发锁 + 强力过滤逻辑)
-    // ============================
-    
-    // 🔥 发送锁：确保同一时间只有一个回复任务在使用输入框
+
     let isReplying = false;
 
     async function autoReplyWeChat(text) {
-        // 如果输入框正在被别的回复占用，就排队等待
+        
         while (isReplying) {
             await new Promise(r => setTimeout(r, 200));
         }
@@ -219,14 +209,14 @@
             inputArea.focus();
             await new Promise(r => setTimeout(r, 100));
 
-            // 防御性清空
+           
             document.execCommand('selectAll', false, null);
             document.execCommand('delete', false, null);
 
-            // 🔥 终极洁癖过滤：无论大模型返回的日志里有没有这俩字，强制替换成 "Agent"
+           
             let sanitizedText = text.replace(/龙虾/g, "Agent");
             
-            // 拼接全新的前缀
+            
             const replyText = "🦞执行汇报：\n" + sanitizedText;
             
             const success = document.execCommand('insertText', false, replyText);
