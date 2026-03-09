@@ -435,9 +435,7 @@ ${actionHistory.slice(-5).join('\n')}
                 currentStep++; continue;
             }
 
-            // ==========================================
-            // 🛡️ 督战队硬拦截 (防纸上谈兵)
-            // ==========================================
+
             if (command.type === "done" && intentObj.type === "ACTION") {
                 let hasClickedSendFlag = actionHistory.some(h => h.includes("(Clicked SEND)"));
                 if (!hasClickedSendFlag && /发|写|post|publish|发布/.test(promptText)) {
@@ -459,9 +457,7 @@ ${actionHistory.slice(-5).join('\n')}
             if (command.targetId) historyLog += ` id:${command.targetId} (动作:${shortReason})`;
             if (command.inputText) historyLog += ` input:yes`; 
             
-            // ==========================================
-            // 🧠 核心逻辑：智商锁 (IQ Lock) V3 真视防误伤版
-            // ==========================================
+
             let lastInputId = null;
             for (let i = actionHistory.length - 1; i >= 0; i--) {
                 let m = actionHistory[i].match(/id:(\d+).*input:yes/);
